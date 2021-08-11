@@ -1,0 +1,14 @@
+.data {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.data_items {
+  margin: 50px;
+}
+
+.Avatar {
+  width: 200px;
+}

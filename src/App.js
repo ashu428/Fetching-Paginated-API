@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import axios from "axios";
+import Pagination from "@material-ui/lab/pagination";
+import Container from "./Container";
 
 function App() {
+  const [posts, setPost] = useState([]);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    async function getData() {
+      const res = await axios.get(
+        "https://reqres.in/api/users?page=" + JSON.stringify(page)
+      );
+      console.log(res.data);
+      setPost(res.data.data);
+    }
+    getData();
+  }, [page]);
+
+  console.log(page);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="content">
+        <Container posts={posts} />
+      </div>
+
+      <div className="pagination">
+        <Pagination
+          variant="outlined"
+          count={2}
+          defaultPage={1}
+          onChange={(event, value) => setPage(value)}
+        />
+      </div>
     </div>
   );
 }
