@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
-import Pagination from "@material-ui/lab/pagination";
 import Container from "./Container";
+import { Button } from "@material-ui/core";
 
 function App() {
   const [posts, setPost] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPost, setTotalpost] = useState(null);
 
   useEffect(() => {
     async function getData() {
@@ -15,12 +16,18 @@ function App() {
       );
       console.log(res.data);
       setPost(res.data.data);
+      setTotalpost(res.data.total);
     }
     getData();
   }, [page]);
 
   console.log(page);
 
+  const post = [];
+  for (let i = 1; i <= totalPost / 6; i++) {
+    post.push(i);
+  }
+  console.log(post);
   return (
     <div>
       <div className="content">
@@ -28,12 +35,19 @@ function App() {
       </div>
 
       <div className="pagination">
-        <Pagination
-          variant="outlined"
-          count={2}
-          defaultPage={1}
-          onChange={(event, value) => setPage(value)}
-        />
+        {post.map((number) => {
+          return (
+            <div key={number}>
+              <Button
+                onClick={() => {
+                  setPage(number);
+                }}
+              >
+                {number}
+              </Button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
