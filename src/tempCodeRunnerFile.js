@@ -1,0 +1,1 @@
+@material-ui/lab/pagination
